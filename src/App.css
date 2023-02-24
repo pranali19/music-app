@@ -1,7 +1,17 @@
 .App {
   text-align: center;
 }
-
+.mobile-queue-text-art {
+  -webkit-line-clamp: 1;
+  overflow:hidden;
+  word-break:break-all;
+  -webkit-box-orient:vertical;
+  display:-webkit-box;
+  color:white;
+  padding-left:2%;
+  align-self:left;
+  justify-self:left;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
