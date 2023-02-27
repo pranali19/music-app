@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom"
-import {Center, Flex,Image,Text} from '@chakra-ui/react'
+import { Flex,Image,Text} from '@chakra-ui/react'
 import { useContext } from "react"
 import { PlaylistContext } from "../musicAppMain"
 import GradientText, { ColoredText } from "../utils/gradientText"
-import { uuid } from "uuidv4"
+import '../../App.css'
+
 const HistoryPage =()=>{
     const {history,setCurrentPlaylist,setCurrentIndex} = useContext(PlaylistContext)
     // const {setCurrentPlaylist,setCurrentIndex,currentPlaylist,currentIndex} = useContext(PlaylistContext)
@@ -49,7 +50,10 @@ const SinglePlayListItem =({item,dataID,index,setCurrentIndex,setCurrentPlaylist
             <Image onClick={playSongHistory} src={image} h='9.5vh' w='9.5vh' rounded='10px'/>
             <Flex direction='column' justifyItems='start' alignItems='flex-start'>
                 <Text color='white' as='h4' m='0%'>{name}</Text>
-                <Text color='white' >{artists}</Text>
+                <p className='mobile-queue-text-art'>
+                {artists}
+
+                </p>
             </Flex>
         </Flex>
     )

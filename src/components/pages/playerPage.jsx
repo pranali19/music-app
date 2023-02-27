@@ -17,8 +17,6 @@ const PlayerPage=()=>{
         var {image,name,artists} =currentPlaylist[currentIndex]
     }
 
-
-
     return (
         currentPlaylist.length?
         <Flex h='100vh' minH='100vh' w='100%' direction='row' >
