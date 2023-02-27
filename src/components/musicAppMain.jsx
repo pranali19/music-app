@@ -25,18 +25,40 @@ const MusicAppMain =()=>{
     const [history,setHistory]=useState([])
     const [audio,setAudio] = useState(new Audio(null))
     const [currentDuration,setCurrentDuration]=useState(0)
+    const [isPlaying, setIsplaying] = useState(null)
 
     useEffect(()=>{
         if(!token){
             getClientCred(setAuthToken,setAuthError,setTokenIsLoading)
         }
+        return ()=>audio.pause
     },[])
     useEffect(()=>{
         getClientCred(setAuthToken,setAuthError,setTokenIsLoading)
 
     },[resetToken])
+    const checkQueue = ()=>currentIndex+1 < currentPlaylist.length
+
+    useEffect(()=>{
+            let interval;
+            
+            if(isPlaying){    
+                interval = setInterval(()=> {
+                if (audio.readyState === 4){
+                setCurrentDuration(Math.floor(audio.currentTime)+1)
+                } 
+               
+                }
+                ,1000)
+            }     
+   
+    return ()=>clearInterval(interval)
+    },[currentIndex,isPlaying])
+
 
     const PlaylistContextValue ={
+        isPlaying:isPlaying, 
+        setIsplaying:setIsplaying,
         currentPlaylist:currentPlaylist, 
         setCurrentIndex:setCurrentIndex ,
         setCurrentPlaylist:setCurrentPlaylist,
@@ -63,7 +85,10 @@ const MusicAppMain =()=>{
                 <MusicAppMainStyle >
                         <MainMenu />
                       
+                        <Flex minHeight='100vh' minWidth='100%'>
                         <SwitchPage />
+
+                        </Flex>
                      
                         
                 </MusicAppMainStyle>

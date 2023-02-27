@@ -52,13 +52,16 @@ export const MobileQueue = ({ currentIndex, currentPlaylist }) => {
         if (currentPlaylist[index]) {
             setHasQueue(true)
         }
-        console.log("hi")
-    }, [currentIndex,])
+        else{
+            setHasQueue(false)
+        }
+  
+    }, [currentIndex])
     return (
         hasQueue ?
             <QueueMbWrap onClick={()=>navigate('/queue')}>
                 <Image
-                    src={currentPlaylist[index].image[0].url}
+                    src={currentPlaylist[index]?currentPlaylist[index].image[0].url:''}
                     h='95%'
                     w='15%'
                     rounded='10px' />
@@ -73,14 +76,12 @@ export const MobileQueue = ({ currentIndex, currentPlaylist }) => {
                         as='h4'
                         m='0%'
                         paddingLeft='2%'>
-                        {"NEXT : "+currentPlaylist[index].name}
+                        NEXT : {currentPlaylist[index]?currentPlaylist[index].name:''}
                     </Text>
 
-                <p
-                className='mobile-queue-text-art'
-                 >
-                    {currentPlaylist[index].artists}
-                    </p>
+                <p className='mobile-queue-text-art'>
+                    {currentPlaylist[index]?currentPlaylist[index].artists:''}
+                </p>
                 </Flex>
             </QueueMbWrap>
             :

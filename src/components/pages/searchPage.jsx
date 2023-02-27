@@ -6,6 +6,7 @@ import dispatchSearch from '../../auth/dispatchSearch'
 import SearchResuts from '../utils/searchList'
 import ShowError from '../utils/ShowError'
 import {searchButtonStyle} from '../common.styled'
+import { ColoredText } from '../utils/gradientText'
     
 const SearchBar=({searchRef})=>{
     return(
@@ -58,7 +59,11 @@ const SearchPage =()=>{
         <Center minH={{base:'100vh',md:'70vh'}} m='4% 2%' h='auto' w='100%' flexDirection='column' justifyContent='start'>
         <Flex sx={inpWrap}>
             <SearchBar searchRef={searchRef}/>
-            <Button sx={searchButtonStyle} onClick={onClickSearch}>Search</Button>
+            <Button sx={searchButtonStyle} onClick={onClickSearch}>
+            
+            <ColoredText message='Search' fontSize={{base:'1rem',md:'1.3rem'}} />
+            </Button>
+         
         </Flex>
         {searchList.length?
         <SearchResuts searchList={searchList}/>:

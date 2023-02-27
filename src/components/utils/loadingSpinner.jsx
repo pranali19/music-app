@@ -3,7 +3,7 @@ import {Spinner,Flex,Center} from '@chakra-ui/react'
 const LoadingSpinner = ()=>{
     return(
         <Flex height='100%' w='100%'>
-        <Center>
+        <Center h='100%' w='100%'>
             <Spinner 
                 m='auto'
                 thickness='5px'

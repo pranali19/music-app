@@ -1,18 +1,31 @@
 import styled from "@emotion/styled"
-import {Link} from 'react-router-dom'
-
+import {NavLink as Link} from 'react-router-dom'
+import { keyframes } from "@emotion/react"
 export const themeColor ='#e35e29'
+
+const bgAnimation=keyframes`
+0%{
+    background-position:0% 50%;
+ }
+ 50%{
+    background-position:100% 50%;
+    }
+100%{
+    background-position:0% 50%
+}
+
+`
 export const MusicAppMainStyle = styled.div`
         display:grid;
         height:fit-content;
         min-height:100vh; 
         width:100%;
-        background-color:#fff3bc;
         grid-template-columns:18% 82%;
+        background:linear-gradient(-45deg, #d6d6ff, #e95252,#c7864a,white);
+        background: linear-gradient(-45deg, #d6d6ff, #e95252);
+        background-size:400% 400%;
+        animation: ${bgAnimation} 15s ease infinite;
     @media(max-width:48em){
-        ${'' /* grid-template-columns:100%;
-        grid-template-rows:28vh auto;
-        height:auto; */}
         display:flex;
         flex-direction:column;
         position:relative;
@@ -52,17 +65,20 @@ export const smallImgStyle = {
 
 }
 export const showAllBtnStyle = {
+    borderWidth:'10px',
+    borderStyle:'solid',
+    bg:'linear-gradient(black ,black) padding-box,linear-gradient(45deg, #6c9bc7, #ff6161) border-box', 
+    border:'3px solid transparent',
     m:'3px' ,
     p:{base:'3px 3px',sm:'4px 5px' },
-    border:'solid white 1.5px',
-    rounded:'3px' ,
-    color:'white' ,
-    fontSize:{base:'0.8rem',sm:'1rem'},
-    bg:'linear-gradient(185deg, black, #121111)',
+    rounded:'8px' ,
+    fontSize:{base:'0.9rem',sm:'1rem'}
 }
 export const searchButtonStyle={
-    bg:'#2acc2b', 
-    color:'white', 
+    borderWidth:'10px',
+    borderStyle:'solid',
+    bg:'linear-gradient(black ,black) padding-box,linear-gradient(45deg, #6c9bc7, #ff6161) border-box', 
+    border:'3px solid transparent',
     h:'auto', 
     m:{base:'3% auto',sm:'auto'},
     p:{base:'1.2% 2%',sm:'1% 2.5%'}, 
@@ -70,6 +86,8 @@ export const searchButtonStyle={
     w:{base:'80%',sm:'auto'},
 
 }
+
+
 export const CardWrapper=styled.div`
 height:220px;
 width:220px;
@@ -85,9 +103,16 @@ ${'' /* width:150px;    */}
 export const Linkstyle=styled(Link)`
 appearance:none;
 text-decoration:none;
-font-weight:400;
-color:#e35e29;
+font-weight:500;
+font-size:1rem;
+${'' /* color:#e35e29; */}
+color:#0c002d;
 font-streach:expanded;
+&.active{
+    color:#a60037;
+}
+
+
 
 `
 export const PlayerMainWrapper=styled.div`

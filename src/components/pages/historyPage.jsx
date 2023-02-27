@@ -1,32 +1,36 @@
 import { useNavigate } from "react-router-dom"
-import { getArtists } from "../utils/searchList"
 import {Center, Flex,Image,Text} from '@chakra-ui/react'
 import { useContext } from "react"
 import { PlaylistContext } from "../musicAppMain"
+import GradientText, { ColoredText } from "../utils/gradientText"
+import { uuid } from "uuidv4"
 const HistoryPage =()=>{
     const {history,setCurrentPlaylist,setCurrentIndex} = useContext(PlaylistContext)
     // const {setCurrentPlaylist,setCurrentIndex,currentPlaylist,currentIndex} = useContext(PlaylistContext)
    
     return (
         history.length?
-        <Flex h='fit-content' w='100%' minHeight='100vh'>
-            <Flex m='10vh auto' direction={'column'} h='fit-content' w='90%'>
+        <Flex h='fit-content' direction={'column'} w='100%' minHeight='100vh'>
+        <Flex p='1%' m='5% 0% 0% 5%'>
+            <ColoredText message={'History'} fontSize='2rem' />
+        </Flex>
+            <Flex m='10vh auto' gap='10px' direction={'column'} h='fit-content' w='90%'>
                 {
                     history.map((i,index)=>
                     <SinglePlayListItem 
                         item={i} 
+                        key={i.trackID}
                         index={index} 
                         setCurrentIndex={setCurrentIndex}
                         setCurrentPlaylist={setCurrentPlaylist}/>
                 )}
             </Flex>
         </Flex>:
-        <Center h='100vh' w='100%'>
-        <Text as='h3'  fontSize={'1.8rem'} color='grey'>No history available</Text>
-        </Center>
+        <GradientText message='No history available'/>
+
         )
 }
-const SinglePlayListItem =({item,index,setCurrentIndex,setCurrentPlaylist})=>{
+const SinglePlayListItem =({item,dataID,index,setCurrentIndex,setCurrentPlaylist})=>{
     const navigate = useNavigate()
     const trackID = item.trackID
     const uri = item.uri

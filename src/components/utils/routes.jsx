@@ -14,18 +14,15 @@ import { PlaylistContext } from '../musicAppMain';
 import { useContext } from 'react';
 import QueuePage from '../pages/queuePage'
 const SwitchPage=({})=>{
-  const {currentPlaylist} = useContext(PlaylistContext)
   
     return( 
     <Flex h='auto' w='100%' bg='black' rounded={{sm:'20px 20px 0px 0px',md:'20px 0 0 20px'}}>
       <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='search' element={<SearchPage />}/>
-          {
-            currentPlaylist.length?
+       
             <Route path='player' element={<PlayerPage />}/>:
-          ''
-          }
+ 
           <Route path='show-play-list' element={<ShowPlaylist />}/>
           <Route path='login' element={<Login />}/>
           <Route path='history' element={<HistoryPage />}/>

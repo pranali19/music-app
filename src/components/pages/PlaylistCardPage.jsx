@@ -15,7 +15,7 @@ const PlaylistCard=()=>{
         <Box justifyContent='center'  display='flex' w='100%' height='auto' direction='row' flexWrap='wrap' overflow='wrap' gap='10px'>
         {playlists.length?
         playlists.map(playlist=>
-            <GetCard img={playlist.images[0].url} textVal={playlist.name} playlistVal={playlist}/>
+            <GetCard key={playlist.id} img={playlist.images[0].url} textVal={playlist.name} playlistVal={playlist}/>
         ):
         <ShowError 
             heightVal='60%'

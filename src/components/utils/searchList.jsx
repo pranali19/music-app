@@ -2,6 +2,7 @@
 import { Flex,Text,Image, IconButton } from "@chakra-ui/react"
 import { useContext, useState } from "react"
 import { MdPlaylistAdd } from "react-icons/md"
+import { uuid } from "uuidv4"
 import { PlaylistContext } from "../musicAppMain"
 import {checkClicked,removeFromList} from '../utils/listReusables'
 
@@ -13,7 +14,7 @@ export const getArtists=(item)=>{
 
 
 
-const SearchItem =({item})=>{
+const SearchItem =({item,dataID})=>{
     const {setCurrentPlaylist,currentPlaylist} = useContext(PlaylistContext)
     const [clicked,setClicked] = useState(false)
     const image = item.album.images[0].url
@@ -63,8 +64,8 @@ const SearchItem =({item})=>{
 const SearchResuts =({searchList})=>{
     
     return(
-        <Flex h='auto' w='80%' gap='15%' direction='column' justifyItems='center'>
-            {searchList.map(i=><SearchItem item={i}/>)}
+        <Flex h='auto' w='80%' gap={{base:'20px', md:'15%'}} direction='column' justifyItems='center'>
+            {searchList.map(i=><SearchItem key={i.id} item={i}/>)}
         </Flex>
     )
 

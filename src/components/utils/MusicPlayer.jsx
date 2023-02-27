@@ -10,6 +10,8 @@ import {
 import {musicPlayerStyle} from '../common.styled'
 import { useContext } from 'react'
 import SliderComponent from './sliderComp'
+
+
 const GetIcon = ({ onClick, icon,disabled,ref }) => {
     
     return (
@@ -17,13 +19,14 @@ const GetIcon = ({ onClick, icon,disabled,ref }) => {
             isDisabled={disabled}
             colorScheme={'white'}
             icon={icon}
-            ref={ref}
+            // ref={ref}
             variant='solid'
             bg='transparent'
             onClick={() => onClick()} />
     )
 }
 const PlayButton = ({ isPlaying }) => {
+    
     return (
         !isPlaying ?
             <GiPlayButton size='25' /> :
@@ -32,10 +35,12 @@ const PlayButton = ({ isPlaying }) => {
 }
 
 
-const MusicPlayer = ({setIsplaying,isPlaying}) => {
+const MusicPlayer = () => {
   
     const {
         history,
+        setIsplaying,
+        isPlaying,
         currentDuration,
         setCurrentDuration,
         setHistory,
@@ -50,53 +55,76 @@ const MusicPlayer = ({setIsplaying,isPlaying}) => {
 
 
     useEffect(()=>{
-        setHistoryList()
-        setIsplaying(true)        
-        if(!audio.error){
-            audio.play()
+        setHistoryList() 
+        if(!audio.error)  {
+        audio.play()
+        setIsplaying(true)
         }else{
-            audio.pause()
-        }
+        audio.pause()
+        setIsplaying(false)}
     },[audio])
- 
+
     useEffect(()=>{  
-        if(currentDuration > Math.floor(audio.duration)+2 ){
+     
+
+        if( currentDuration >= audio.duration || audio.ended){
             if(currentIndex < currentPlaylist.length-1){
+            
                 setAudio(new Audio(currentPlaylist[currentIndex+1].uri))
-                setCurrentDuration(0)
                 setCurrentIndex(state=>state+1) 
             }
-            setIsplaying(false)
-        }
+            else if(currentIndex == currentPlaylist.length-1){
+                        setIsplaying(false)
+                audio.pause()
+                
+            }
+            else{
+                setIsplaying(false)
+                audio.pause()
+               
+            }
+            }
+
     },[currentDuration])
 
     const setHistoryList=()=>{
-        const historyList = history.filter(i=>i.trackID !== currentPlaylist[currentIndex].trackID )
+        const historyList = history?history.filter(i=>i.trackID !== currentPlaylist[currentIndex].trackID ):[]
         setHistory([currentPlaylist[currentIndex] ,...historyList])
     }
     const onScrub = (value,setCurrentDuration) => {
  
     }
     const checkAndSetTrack=(indx)=>{
-        if(indx >= 0 & indx < currentPlaylist.length){
+        if(indx >= 0 && indx < currentPlaylist.length){
         setAudio(new Audio(currentPlaylist[indx].uri))
         setCurrentIndex(indx)
+        setCurrentDuration(0)
         return true
         }
+        setCurrentDuration(0)
         return false
     }
     const onClickPrev = () =>  {
         audio.pause()
         setIsplaying(checkAndSetTrack(currentIndex-1))
+      
     }
     const onClickNext = () =>{
          audio.pause()
         setIsplaying(checkAndSetTrack(currentIndex+1))
+        
 
     }
         
     const onClickPlay = () => {
-        setIsplaying(state=>!state)
+        if(isPlaying == null){
+            setAudio(new Audio(currentPlaylist[currentIndex].uri))
+            setIsplaying(true)
+        }
+        else{
+            setIsplaying(state=>!state)
+        }
+        
         if(!audio.error){
             if (isPlaying == true) {
                 audio.pause()
@@ -119,11 +147,7 @@ const MusicPlayer = ({setIsplaying,isPlaying}) => {
             <Flex w={{base:'85%' , sm:'70%'}} h='fit-content'>
                 <SliderComponent 
                     currentDuration={currentDuration} 
-                    setCurrentDuration={setCurrentDuration} 
-                    setIsplaying={setIsplaying} 
-                    isPlaying={isPlaying} 
                     onScrub={onScrub} 
-                    setHistoryList={setHistoryList}
                     audio={audio} />
             </Flex>
             <Flex h='auto' w={{base:'90%' ,sm:'80%'}} justifyContent='space-around'>

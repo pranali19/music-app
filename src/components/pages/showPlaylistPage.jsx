@@ -8,7 +8,7 @@ import {getArtists} from '../utils/searchList'
 import getPlaylistFromUrl from '../../auth/getPlaylistFromUrl';
 import { bannerImg, smallImgStyle } from "../common.styled"
 import {removeFromList,checkClicked} from '../utils/listReusables'
-
+import {uuid} from 'uuidv4'
 
 const SmallImage=({src})=>{
     return(
@@ -18,7 +18,7 @@ const SmallImage=({src})=>{
     )
 }
 
-const SinglePlayListItem =({item})=>{
+const SinglePlayListItem =({item,dataID})=>{
     const navigate = useNavigate()
     const [clicked,setClicked] = useState(false)
     const {setCurrentPlaylist,setCurrentIndex,currentPlaylist,currentIndex} = useContext(PlaylistContext)
@@ -26,7 +26,7 @@ const SinglePlayListItem =({item})=>{
     const {name,preview_url:uri,id:trackID} =item.track
     const artists = getArtists(item.track)
     const image = item.track.album.images
-    console.log(image)
+    
     useEffect(()=>{
         if(checkClicked(trackID,currentPlaylist)){
             setClicked(true)
@@ -59,7 +59,7 @@ const SinglePlayListItem =({item})=>{
 
     const songInfo = {setCurrentIndex,setCurrentPlaylist,navigate,trackID,uri,image,name,artists}
     return(
-        <Flex h='10vh' w='100%' direction='row' m='1% 0%' justifyItems='space-between'>
+        <Flex h='10vh' id={dataID.toString()} w='100%' direction='row' m='1% 0%' justifyItems='space-between'>
             <Flex h='10vh' w='100%' direction='row' gap='4%'>
                 <Image 
                     onClick={()=>onClickPlaySong(songInfo)} 
@@ -99,9 +99,9 @@ const PlaylistComp = ({list})=>{
 
     return(
         
-        <Flex direction='column' w='90%' m='0% auto '>
+        <Flex direction='column' w='90%' m='0% auto ' gap='5%'>
            {playList?
-            playList.map(item=><SinglePlayListItem item={item}/>
+            playList.map(item=><SinglePlayListItem dataID={()=>uuid()} item={item}/>
            ):
            ''
            }

@@ -11,8 +11,8 @@ import { PlaylistContext } from "./musicAppMain"
 const LoadMenuLinks=({setMenuIsVisible})=>{
     return(
         <>
-        {MenuLinks.map(i=>
-        <Linkstyle exact='true' onClick={()=>setMenuIsVisible(false)} to={i.link}>{i.name}</Linkstyle>
+        {MenuLinks.map((i)=>
+        <Linkstyle key={i.name} exact='true' onClick={()=>setMenuIsVisible(false)} to={i.link}>{i.name}</Linkstyle>
         )}
 
         </>
@@ -22,11 +22,6 @@ const ShowMenu =({currentPlaylist,displayVal,setMenuIsVisible})=>{
     return(
         <Flex display={displayVal} p='1.5vh 0vh' direction={'column'} gap='1.5vh' bg='inherit'>
         <LoadMenuLinks setMenuIsVisible={setMenuIsVisible}/>
-        {
-            currentPlaylist.length?
-            <Linkstyle exact='true' onClick={()=>setMenuIsVisible(false)} to={'/player'} >{'Player'}</Linkstyle>:
-            ''
-        }
         <Outlet/>
     </Flex>
     )
@@ -48,7 +43,7 @@ const MainMenu =({})=>{
             <ShowMenu displayVal={{base:'flex',md:'none'}} setMenuIsVisible={setMenuIsVisible} currentPlaylist={currentPlaylist} />
             :''
             }
-            <ShowMenu displayVal={{base:'none',md:'flex'}} currentPlaylist={currentPlaylist} />
+            <ShowMenu displayVal={{base:'none',md:'flex'}} setMenuIsVisible={()=>{}} currentPlaylist={currentPlaylist} />
 
         </Flex>
     )
